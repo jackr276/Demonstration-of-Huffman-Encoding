@@ -22,6 +22,7 @@ public class HuffmanEncoder{
 
 
 	public void generateHuffmanCodes(){
+		System.out.println("\n=============== Huffman Codes =====================\n");
 		while(this.queue.size() > 1){
 			HuffmanNode x = queue.poll();
 
@@ -50,7 +51,7 @@ public class HuffmanEncoder{
 		}
 
 		if(root.getLeft() == null && root.getRight() == null && root.getData() != '\n'){
-			System.out.println(root.getChar() + ":" + byteString + ", Bytes needed: " + byteString.length());
+			System.out.printf("Character: %c, Encoding: %13s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
 			return;
 		}
 
