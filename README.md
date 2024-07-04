@@ -1,5 +1,5 @@
 # Demonstration of Huffman Encoding
-Author: Jack Robbins
+Author: [Jack Robbins](https://www.github.com/jackr276)
 
 ## Introduction
 Huffman encoding is an efficient and lossless data compression algorithm that uses statistics, specifically occurrence frequency, to generate variable length codes that are assigned to each character. This allows more frequent characters to be assigned shorter codes and therefore reduce the overall size of the file. The real reduction amount is usually around 45%-50%, but this can vary based on the frequency levels and distribution in a given set of ASCII text. 
