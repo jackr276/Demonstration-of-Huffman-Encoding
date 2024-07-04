@@ -7,29 +7,41 @@
 import java.util.PriorityQueue;
 import java.util.Map;
 
-
 public class HuffmanEncoder{
+	//We will use a minHeap for the nodes
 	private	PriorityQueue<HuffmanNode> queue;
+	//Store the frequencies passed in for convenience
 	private Map<Character, Integer> frequencies;
+	//The root of our huffman tree
 	private HuffmanNode root;
-	int totalBits;
+	//For printing, keep track of the number of bits the file would use	
+	private int totalBits;
 
+
+	/**
+	 * The constructor for the encoder. This constructor populates the priority
+	 * queue, priming it for the encoder to be called
+	 */
 	public HuffmanEncoder(Map<Character, Integer> frequencies){
+		//Save as an instance variable for convenience
 		this.frequencies = frequencies;	
 
+		//We need two arrays for characters and their frequencies
 		char[] characters = new char[frequencies.keySet().toArray().length];
 		int[] charFreq = new int[characters.length];
 
+		//Populate the arrays
 		for(int i = 0; i < characters.length; i++){
 			characters[i] = (char)frequencies.keySet().toArray()[i];
 			charFreq[i] = frequencies.get(characters[i]);	
 		}				
 
-
+		//Initialize the root and totalBits
 		this.root = null;
 		this.totalBits = 0;
 		queue = new PriorityQueue<HuffmanNode>(new HuffmanComparator());
 
+		//Show the user the character frequencies
 		System.out.println("\n================ Character Frequencies ================\n");
 		for(int i = 0; i < characters.length; i++){
 			if(characters[i] == '\n'){
@@ -37,51 +49,63 @@ public class HuffmanEncoder{
 			}
 
 			System.out.println("Character: " + characters[i] + ", frequency: " + charFreq[i]);
+			//Put these characters and frequencies into the queue as new HuffmanNodes
 			queue.add(new HuffmanNode(characters[i], charFreq[i]));
 		}
 	}
 
 
+	/**
+	 * The actual tree generator that generates a tree using the queue populated
+	 * in the constructor
+	 */
 	public void generateHuffmanCodes(){
 		System.out.println("\n=============== Huffman Codes =====================\n");
 		while(this.queue.size() > 1){
-			HuffmanNode x = queue.poll();
+			//Grab the left and right nodes
+			HuffmanNode left = queue.poll();
+			HuffmanNode right = queue.poll();
 
-			HuffmanNode y = queue.poll();
-
-			HuffmanNode f = new HuffmanNode();
-
-			f.setData(x.getData() + y.getData());	
-			f.setChar('$');
-
-			f.setLeftChild(x);	
-			f.setRightChild(y);	
-			
+			//Make a new node with their combined frequencies
+			HuffmanNode f = new HuffmanNode('$', right.getFrequency() + left.getFrequency());
+	
+			//Set the left and right children appropriately
+			f.setLeftChild(left);
+			f.setRightChild(right);
+		
+			//Set f to be the root and add it to the queue
 			this.root = f;
-
 			queue.add(f);
 		}
 
-		printCode(root, "");
+		_printCode(root, "");
 
-		System.out.println("\nTotal bytes needed: " + totalBits / 8);
-
-		System.out.println("===================================================");
+		//When we're done, print out how many bytes the huffman version would need
+		System.out.println("\nHuffman Encoded File Size: " + totalBits / 8 + " bytes");
 	}
 
 
-	public void printCode(HuffmanNode root, String byteString){
+	/**
+	 * Recursively traverse the huffman tree generate and print the code for the huffman sequence
+	 */
+	private void _printCode(HuffmanNode root, String byteString){
+		//Base case 1
 		if(root == null){
 			return;
 		}
 
-		if(root.getLeft() == null && root.getRight() == null && root.getData() != '\n'){
+		//Base case 2: if we get here, we are done generatin the string 
+		if(root.getLeft() == null && root.getRight() == null && root.getChar() != '\n'){
+			//Print to console for the user
 			System.out.printf("Character: %1c, Encoding: %15s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
+			//Add to the total bits calculation as well
 			totalBits += byteString.length() * frequencies.get(root.getChar());
 			return;
 		}
 
-		printCode(root.getLeft(), byteString + "0");
-		printCode(root.getRight(), byteString + "1");
+		//If we get here, we go left and add 0
+		_printCode(root.getLeft(), byteString + "0");
+		//If we get here, we go right and add 1 
+		_printCode(root.getRight(), byteString + "1");
 	}
 }
