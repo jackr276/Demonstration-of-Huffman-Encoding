@@ -1,13 +1,16 @@
 import java.util.PriorityQueue;
+import java.util.Map;
 
 public class HuffmanEncoder{
 	private	PriorityQueue<HuffmanNode> queue;
+	private Map<Character, Integer> freqs;
 	private HuffmanNode root;
+	int totalBits;
 
-
-	public HuffmanEncoder(char[] characters, int[] frequencies){
+	public HuffmanEncoder(char[] characters, int[] frequencies, Map<Character, Integer> freqs){
 		this.root = null;
-
+		this.totalBits = 0;
+		this.freqs = freqs;
 		queue = new PriorityQueue<HuffmanNode>(new HuffmanComparator());
 
 		for(int i = 0; i < characters.length; i++){
@@ -42,6 +45,10 @@ public class HuffmanEncoder{
 		}
 
 		printCode(root, "");
+
+		System.out.println("\nTotal bytes needed: " + totalBits / 8);
+
+		System.out.println("===================================================");
 	}
 
 
@@ -52,6 +59,7 @@ public class HuffmanEncoder{
 
 		if(root.getLeft() == null && root.getRight() == null && root.getData() != '\n'){
 			System.out.printf("Character: %c, Encoding: %13s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
+			totalBits += byteString.length() * freqs.get(root.getChar());
 			return;
 		}
 

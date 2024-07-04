@@ -49,7 +49,7 @@ public class Main{
 			charFreq[i] = frequencies.get(characters[i]);	
 		}				
 
-		HuffmanEncoder h = new HuffmanEncoder(characters, charFreq);
+		HuffmanEncoder h = new HuffmanEncoder(characters, charFreq, frequencies);
 		h.generateHuffmanCodes();
 	}
 }
