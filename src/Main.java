@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import huffman.HuffmanEncoder;
 
 public class Main{
 	/**

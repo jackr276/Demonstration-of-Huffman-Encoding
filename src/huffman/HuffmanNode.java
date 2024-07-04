@@ -3,6 +3,9 @@
  * This class represents one Node within the huffman tree. Within this node we store the 
  * frequency of a given character and the character itself
  */
+
+package huffman;
+
 public class HuffmanNode{	
 	//ASCII character
 	private char c;

@@ -3,6 +3,8 @@
  * This class implements the comparator for the priority queue used in the huffman encoder
  */
 
+package huffman;
+
 import java.util.Comparator;
 
 public class HuffmanComparator implements Comparator<HuffmanNode> {
