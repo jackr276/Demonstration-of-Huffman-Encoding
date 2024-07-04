@@ -90,7 +90,7 @@ public class HuffmanEncoder{
 	/**
 	 * Recursively traverse the huffman tree generate and print the code for the huffman sequence
 	 */
-	private void _printCode(HuffmanNode root, String byteString){
+	private void _printCode(HuffmanNode root, String encoding){
 		//Base case 1
 		if(root == null){
 			return;
@@ -99,15 +99,15 @@ public class HuffmanEncoder{
 		//Base case 2: if we get here, we are done generatin the string 
 		if(root.getLeft() == null && root.getRight() == null && root.getChar() != '\n'){
 			//Print to console for the user
-			System.out.printf("Character: %1c, Encoding: %20s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
+			System.out.printf("Character: %1c, Encoding: %20s, Bits needed: %2d\n", root.getChar(), encoding, encoding.length());
 			//Add to the total bits calculation as well
-			totalBits += byteString.length() * frequencies.get(root.getChar());
+			totalBits += encoding.length() * frequencies.get(root.getChar());
 			return;
 		}
 
 		//If we get here, we go left and add 0
-		_printCode(root.getLeft(), byteString + "0");
+		_printCode(root.getLeft(), encoding + "0");
 		//If we get here, we go right and add 1 
-		_printCode(root.getRight(), byteString + "1");
+		_printCode(root.getRight(), encoding + "1");
 	}
 }
