@@ -1,4 +1,0 @@
-./src/HuffmanNode.java
-./src/HuffmanComparator.java
-./src/HuffmanEncoder.java
-./src/Main.java
