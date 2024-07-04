@@ -99,7 +99,7 @@ public class HuffmanEncoder{
 		//Base case 2: if we get here, we are done generatin the string 
 		if(root.getLeft() == null && root.getRight() == null && root.getChar() != '\n'){
 			//Print to console for the user
-			System.out.printf("Character: %1c, Encoding: %15s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
+			System.out.printf("Character: %1c, Encoding: %20s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
 			//Add to the total bits calculation as well
 			totalBits += byteString.length() * frequencies.get(root.getChar());
 			return;
