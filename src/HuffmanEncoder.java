@@ -13,6 +13,7 @@ public class HuffmanEncoder{
 		this.freqs = freqs;
 		queue = new PriorityQueue<HuffmanNode>(new HuffmanComparator());
 
+		System.out.println("\n================ Character Frequencies ================\n");
 		for(int i = 0; i < characters.length; i++){
 			if(characters[i] == '\n'){
 				continue;
@@ -58,7 +59,7 @@ public class HuffmanEncoder{
 		}
 
 		if(root.getLeft() == null && root.getRight() == null && root.getData() != '\n'){
-			System.out.printf("Character: %c, Encoding: %13s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
+			System.out.printf("Character: %c, Encoding: %15s, Bits needed: %2d\n", root.getChar(), byteString, byteString.length());
 			totalBits += byteString.length() * freqs.get(root.getChar());
 			return;
 		}
